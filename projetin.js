@@ -11,6 +11,7 @@ if (canvas.getContext) {
     var points = []
 
     canvas.addEventListener('click', function (){
+
         var clickedPoint = getClickCoordinates(event, canvas)
         
         // `•.¸¸.•´´¯`••._.• - - - INSERT MODE - - - •._.••`¯´´•.¸¸.•`
@@ -63,6 +64,33 @@ if (canvas.getContext) {
         index = -1
 
     }
+
+    
+    console.log (" - - -")
+    if (points.length > 4){
+        var numbAvali = 500
+        var curvePoints = []
+        for (var t=0; t<=1; t+=1/numbAvali){
+            var Xaux = []
+            var Yaux = []
+            for (var i=0; i<=points.length-1; i++){
+                Xaux.push(points[i].x)
+                Yaux.push(points[i].y)
+            }
+            var curvePoint = new Point(castejuju(t, Xaux), castejuju(t, Yaux))
+            //console.log (curvePoint)
+            curvePoints.push(curvePoint)
+        }
+        
+        ctx.moveTo(curvePoints[0].x, curvePoints[0].y)
+        for (var i=1; i<curvePoints.length; i++){
+            ctx.lineTo(curvePoints[i].x, curvePoints[i].y)
+            ctx.strokeStyle = "#FFDEAD"
+            ctx.lineWidth = 0.5
+            ctx.stroke()   
+        }
+    }
+
     })
 
 
@@ -71,13 +99,44 @@ if (canvas.getContext) {
 }
 
 
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+// `•.¸¸.•´´¯`••._.• algorithm for bezier curve •._.••`¯´´•.¸¸.•`
+
+function castejuju (u, coord){
+    /* based on the pseudocode provided here: 
+    https://pages.mtu.edu/~shene/COURSES/cs3621/NOTES/spline/Bezier/de-casteljau.html */ 
+    var n = coord.length;
+
+    for (var k=1; k <= n; k++){
+        for (var i=0; i < n-k; i++){
+            coord[i] = (1-u)*coord[i] + u*coord[i+1]
+            console.log(coord[i])
+       }
+    }
+    return coord[0];
+}
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
 // `•.¸¸.•´´¯`••._.• some structures •._.••`¯´´•.¸¸.•`
 
 function Point(x, y) {
-    this.x = x;
-    this.y = y;
-  }
+    this.x = x
+    this.y = y
 
+    this.dot = function(numeroAe){
+        this.x = numeroAe*this.x
+        this.y = numeroAe*this.y
+    }
+   // this.sum = function(numeroAe){
+     //   this.x = numeroAe + x
+       // this.y = numeroAe + y
+   // }
+}
 
 // `•.¸¸.•´´¯`••._.• some methods •._.••`¯´´•.¸¸.•`
 
