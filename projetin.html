@@ -1,8 +1,23 @@
 
-<body style = "background : rgb(158, 255, 158); text-align: center">
-    <canvas id="canvas" width="700" height="500" style="background: white; margin-top: 10%;" >
+<body style = "background : #E8FF82; text-align: center">
+    <canvas id="canvas" width="900" height="500" style="background: white; margin-top: 7%;" >
     </canvas>
 </body>
-<input type="checkbox" id="defaultMode">
+<br>
+<br>
+<input type="number" id="avalNumber" min="0" max="500" value = 15>
+<input type="button" id="createNewCurve" value="Create a new curve!" onclick="createNewCurve()">
+
+<input type="button" id="prevCurve" value="<">
+<input type="button" id="nextCurve" value=">">
+<input type="button" id="deleteCurve" value="Delete this curve!">
+
+<br>
+<label><input type="checkbox" id="showCurves" onclick="redrawInCanvas()"> Show Curves </label>
+<label><input type="checkbox" id="showPolyg" onclick="redrawInCanvas()"> Show polygones</label>
+<label><input type="checkbox" id="showControlPoints" onclick = "redrawInCanvas()"> Show Control Points</label> 
+
+
+<label><input type="checkbox" id="defaultMode" value="Default Mode"> Default Mode </label>
 
 <script src="./projetin.js"></script>
