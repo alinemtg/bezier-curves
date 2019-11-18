@@ -1,34 +1,45 @@
-<div class="canvasrea">
+
 <body>
     <canvas id="canvas" width="900" height="500" style="background: white; margin-top: 7%;" >
     </canvas>
 </body>
-</div>
+
 <br>
 <br>
 
-<div class="commandsPt1">
-<input type="number" class="avalNumber" id="avalNumber" min="0" max="00" value = 15>
-<input type="button" class="b_deleIns" id="createNewCurve" value="Create a new curve!" onclick="createNewCurve()">
-
-<input type="button" class="b_prevNext" id="prevCurve" value="<" onclick="selectPrevCurve()">
-<input type="button" class="b_prevNext" id="nextCurve" value=">" onclick ="selectNextCurve()">
-<input type="button" class="b_deleIns" id="deleteCurve" value="Delete this curve!" onclick ="deleteSelectedCurve()">
+<div>
+    <input type="button" id="b_changeMode" value="Change Mode" onclick="changeMode()">
 </div>
 
-<div class="commandsPt2">
-<br>
-<label class="c_show"><input type="checkbox" id="showCurves" onclick="redrawInCanvas()"> Show Curves </label>
-<label class="c_show"><input type="checkbox" id="showPolyg" onclick="redrawInCanvas()"> Show polygones</label>
-<label class="c_show"><input type="checkbox" id="showControlPoints" onclick = "redrawInCanvas()"> Show Control Points</label> 
+<br>  
+
+<div class="showCheckboxes">
+    <label class="c_show"><input type="checkbox" id="showCurves" onclick="redrawInCanvas()"> Show Curves </label>
+    <label class="c_show"><input type="checkbox" id="showPolyg" onclick="redrawInCanvas()"> Show polygones</label>
+    <label class="c_show"><input type="checkbox" id="showControlPoints" onclick = "redrawInCanvas()"> Show Control Points</label> 
 </div>
+
 <br>
 
-<div class="commandsPt3">
-<label class="c_defaultMode"><input type="checkbox" id="defaultMode" value="Default Mode" checked> Default Mode </label>
-<input type="button" class="b_addPts" id="addPointsToSelectedCurve" value="Add Points to selected Curve!" onclick="addPendingPointsToSelectedCurve()">
+<div id="defaultModeElements">
+    <input type="number" id="avalNumber" min="0" max="00" value = 15>
+    <input type="button" class="b_actionToCurve" id="createNewCurve" value="Create a new curve!" onclick="createNewCurve()">
 </div>
 
+<div id="makeChangesModeElements">
+
+    <div class="alternCurvesButtons">
+            <input type="button" class="b_prevNext" id="prevCurve" value="<" onclick="selectPrevCurve()">
+            <input type="button" class="b_prevNext" id="nextCurve" value=">" onclick ="selectNextCurve()">
+    </div>
+    <br>
+    <input type="button" class="b_actionToCurve" id="deleteCurve" value="Delete curve" onclick ="deleteSelectedCurve()">
+    <input type="button" class="b_actionToCurve" id="addPointsToSelectedCurve" value="Add Points" onclick="addPendingPointsToSelectedCurve()">
+    <br>
+    <br>
+    <label class="c_other"><input type="checkbox" id="c_deleteMode" checked> Delete Points Mode </label>
+
+</div>
 
 <script src="./projetin.js"></script>
 <link rel="stylesheet" type="text/css" href="projetin.css" media="screen"/>

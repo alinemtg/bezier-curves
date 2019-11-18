@@ -1,27 +1,17 @@
+
+/* - - - - - - - GERAL - - - - - - - */
+
 body{
     text-align: center;
     background: rgb(145,168,208);
     background: radial-gradient(circle, rgba(145,168,208,1) 9%, rgba(206,188,204,1) 50%, rgba(247,202,201,1) 73%);
 }
 
-/* COMMANDS PART ONE */
+/* 'change mode' button */
 
-.commandsPt1 {
-    position: static;
-}
-
-
-/* QUANTITY */
-.avalNumber{
-    border-radius: 15px;
-    text-align: center;
-    padding: 8px 15;
-}
-
-/* BUTTONS DELETE AND INSERT */
-.b_deleIns {
+#b_changeMode {
     display: inline-block;
-    padding: 8px 10;
+    padding: 8px 100;
     font-size: 15px;
     font-family: "Lucida Console", Courier, monospace;
     cursor: pointer;
@@ -34,15 +24,36 @@ body{
     border-radius: 15px;
     box-shadow: 0 5px #999;
 }
-.b_deleIns:hover {background-color: #F7CAC9}
+#b_changeMode:hover {background-color: #F7CAC9}
 
-.b_deleIns:active {
+#b_changeMode:active {
   background-color: rgb(247, 176, 175);
   box-shadow: 0 0px #666;
   transform: translateY(2px);
 }
 
-/* BUTTONS PREVIOUS AND NEXT */
+
+/* 'show' checkboxes*/
+
+.c_show{
+    font-family: "Lucida Console", Courier, monospace;
+}
+
+/* - - - - - - - 'DEFAULT' MODE - - - - - - - */
+
+/* number input */
+
+#avalNumber{
+    border-radius: 15px;
+    text-align: center;
+    padding: 8px 15;
+}
+
+
+/* - - - - - - - 'MAKE CHANGES' MODE - - - - - - - */
+
+/* 'prev/next' buttons */
+
 .b_prevNext{
     display: inline-block;
     padding: 8px 15;
@@ -65,31 +76,17 @@ body{
   transform: translateY(2px);
 }
 
-/* COMMANDS PART TWO */
+/* 'delete mode' checkbox*/
 
-.commandsPt2 {
-    position: static;
-}
-
-
-.c_show{
-    font-family: "Lucida Console", Courier, monospace;
-
-}
-
-
-/* COMMANDS PART THREE */
-
-.commandsPt3 {
-    position: static;
-}
-
-.c_defaultMode {
+.c_other{
     font-family: "Lucida Console", Courier, monospace;
 }
 
-/* BUTTON ADD POINTS TO CURVE */
-.b_addPts{
+/* - - - - - - - BOTH MODES - - - - - - - */
+
+/* 'create/delete/insertPoints' buttons */
+
+.b_actionToCurve{
     display: inline-block;
     padding: 8px 10;
     font-size: 15px;
@@ -103,9 +100,9 @@ body{
     border: none;
     border-radius: 15px;
 }
-.b_addPts:hover {background-color: #F7CAC9}
+.b_actionToCurve:hover {background-color: #F7CAC9}
 
-.b_addPts:active {
+.b_actionToCurve:active {
   background-color: rgb(230, 129, 127);
   transform: translateY(2px);
 }
