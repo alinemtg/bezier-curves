@@ -1,3 +1,7 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="projetin.css" media="screen"/>
+
+</head>
 
 <body style = "background : #E8FF82; text-align: center">
     <canvas id="canvas" width="900" height="500" style="background: white; margin-top: 7%;" >
@@ -18,7 +22,7 @@
 <label><input type="checkbox" id="showControlPoints" onclick = "redrawInCanvas()"> Show Control Points</label> 
 
 <br>
-<label><input type="checkbox" id="defaultMode" value="Default Mode" checked> Default Mode </label>
+<label class="defaultModeCheckbox"><input type="checkbox" id="defaultMode" value="Default Mode" checked> Default Mode </label>
 <input type="button" id="addPointsToSelectedCurve" value="Add Points to Selected Curve!" onclick="addPendingPointsToSelectedCurve()">
 
 <script src="./projetin.js"></script>

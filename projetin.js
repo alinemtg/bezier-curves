@@ -1,4 +1,3 @@
-
 /* 
 Projetinho de PG, II Unidade .
    Aline Gouveia - amtg   · ☆ · 　 　　
@@ -63,7 +62,13 @@ canvas.addEventListener('click', function(){
                 if (Math.sqrt((clickedPoint.x-comparedPoint.x)*(clickedPoint.x-comparedPoint.x) + (clickedPoint.y-comparedPoint.y)*(clickedPoint.y-comparedPoint.y)) <= sizeOfPoints+error){
                     selectedCurveHasClickedPt = true
                     curves[selectedCurve].controlPoints.splice(i, 1)
-                    curves[selectedCurve].castejuju()
+                    console.log(change_pointsPending)
+                    if (curves[selectedCurve].controlPoints.length==0){
+                        deleteSelectedCurve()
+                        alert("oops, you killed a curve!")
+                    }else{
+                        curves[selectedCurve].castejuju()
+                    }
                     redrawInCanvas()
                     break
                 }
@@ -100,6 +105,24 @@ function redrawInCanvas(){
     if (c_showContrPoints.checked){
         for (var c=0; c<curves.length; c++){
             curves[c].showContrPoints(ctx)
+        }
+    }
+    if (create_pointsPending.length>0){
+        for (var p=0; p<create_pointsPending.length; p++){
+            ctx.beginPath()
+            ctx.moveTo(create_pointsPending[p].x, create_pointsPending[p].y)
+            ctx.arc (create_pointsPending[p].x, create_pointsPending[p].y, sizeOfPoints, 0,  Math.PI * 2)
+            ctx.fillStyle = "#7E8754"
+            ctx.fill();
+        }
+    }
+    if (change_pointsPending.length>0){
+        for (var p=0; p<change_pointsPending.length; p++){
+            ctx.beginPath()
+            ctx.moveTo(change_pointsPending[p].x, change_pointsPending[p].y)
+            ctx.arc (change_pointsPending[p].x, change_pointsPending[p].y, sizeOfPoints, 0,  Math.PI * 2)
+            ctx.fillStyle = "#66CDAA"
+            ctx.fill();
         }
     }
 }
