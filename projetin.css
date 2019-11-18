@@ -1,0 +1,111 @@
+body{
+    text-align: center;
+    background: rgb(145,168,208);
+    background: radial-gradient(circle, rgba(145,168,208,1) 9%, rgba(206,188,204,1) 50%, rgba(247,202,201,1) 73%);
+}
+
+/* COMMANDS PART ONE */
+
+.commandsPt1 {
+    position: static;
+}
+
+
+/* QUANTITY */
+.avalNumber{
+    border-radius: 15px;
+    text-align: center;
+    padding: 8px 15;
+}
+
+/* BUTTONS DELETE AND INSERT */
+.b_deleIns {
+    display: inline-block;
+    padding: 8px 10;
+    font-size: 15px;
+    font-family: "Lucida Console", Courier, monospace;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: rgb(105, 130, 173);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 5px #999;
+}
+.b_deleIns:hover {background-color: #F7CAC9}
+
+.b_deleIns:active {
+  background-color: rgb(247, 176, 175);
+  box-shadow: 0 0px #666;
+  transform: translateY(2px);
+}
+
+/* BUTTONS PREVIOUS AND NEXT */
+.b_prevNext{
+    display: inline-block;
+    padding: 8px 15;
+    font-size: 15px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: rgb(105, 130, 173);
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 5px #999;
+}
+.b_prevNext:hover {background-color: #F7CAC9}
+
+.b_prevNext:active {
+  background-color: rgb(247, 176, 175);
+  box-shadow: 0 0px #666;
+  transform: translateY(2px);
+}
+
+/* COMMANDS PART TWO */
+
+.commandsPt2 {
+    position: static;
+}
+
+
+.c_show{
+    font-family: "Lucida Console", Courier, monospace;
+
+}
+
+
+/* COMMANDS PART THREE */
+
+.commandsPt3 {
+    position: static;
+}
+
+.c_defaultMode {
+    font-family: "Lucida Console", Courier, monospace;
+}
+
+/* BUTTON ADD POINTS TO CURVE */
+.b_addPts{
+    display: inline-block;
+    padding: 8px 10;
+    font-size: 15px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font-family: "Lucida Console", Courier, monospace;
+    outline: none;
+    color: #fff;
+    background-color: rgb(247, 176, 175);
+    border: none;
+    border-radius: 15px;
+}
+.b_addPts:hover {background-color: #F7CAC9}
+
+.b_addPts:active {
+  background-color: rgb(230, 129, 127);
+  transform: translateY(2px);
+}

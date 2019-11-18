@@ -6,6 +6,12 @@ Projetinho de PG, II Unidade .
                         　　· ✧　.
 */
 
+// - - colors used ^^ - - 
+// pending point in defaultMode = #91A8D0
+// pending point in removeMode = #d99cb5
+// curve point/polygon normal = #91A8D0
+// curve normal = #6784b5
+// curve - all- selected = #F08080
 
 // `~·=·=·=·=·=·=·='☆ . · getting html elements · . ☆'=·=·=·=·=·=·=·~
 
@@ -47,7 +53,7 @@ canvas.addEventListener('click', function(){
             ctx.beginPath()
             create_pointsPending.push (clickedPoint)
             ctx.arc (clickedPoint.x, clickedPoint.y, sizeOfPoints, 0,  Math.PI * 2)
-            ctx.fillStyle = "#7E8754"
+            ctx.fillStyle = "#91A8D0"
             ctx.fill();
     }
     else{
@@ -78,7 +84,7 @@ canvas.addEventListener('click', function(){
                 ctx.beginPath()
                 change_pointsPending.push (clickedPoint)
                 ctx.arc (clickedPoint.x, clickedPoint.y, sizeOfPoints, 0,  Math.PI * 2)
-                ctx.fillStyle = "#66CDAA"
+                ctx.fillStyle = "#d99cb5"
                 ctx.fill();
             }
         }else{
@@ -112,7 +118,7 @@ function redrawInCanvas(){
             ctx.beginPath()
             ctx.moveTo(create_pointsPending[p].x, create_pointsPending[p].y)
             ctx.arc (create_pointsPending[p].x, create_pointsPending[p].y, sizeOfPoints, 0,  Math.PI * 2)
-            ctx.fillStyle = "#7E8754"
+            ctx.fillStyle = "#91A8D0"
             ctx.fill();
         }
     }
@@ -121,7 +127,7 @@ function redrawInCanvas(){
             ctx.beginPath()
             ctx.moveTo(change_pointsPending[p].x, change_pointsPending[p].y)
             ctx.arc (change_pointsPending[p].x, change_pointsPending[p].y, sizeOfPoints, 0,  Math.PI * 2)
-            ctx.fillStyle = "#66CDAA"
+            ctx.fillStyle = "#d99cb5"
             ctx.fill();
         }
     }
@@ -265,7 +271,7 @@ function Curve() {
            if (this.isSelected){
                ctx.fillStyle = "#F08080"
             } else{
-                ctx.fillStyle = "#7E8754"   
+                ctx.fillStyle = "#91A8D0"   
             }
             ctx.fill()
         }
@@ -282,7 +288,7 @@ function Curve() {
                 if (this.isSelected){
                     ctx.strokeStyle = "#F08080"
                 }else{
-                    ctx.strokeStyle = "#7E8754"
+                    ctx.strokeStyle = "#91A8D0"
                 }
 
                 ctx.setLineDash([2, 3])
@@ -301,7 +307,7 @@ function Curve() {
             if (this.isSelected){
                 ctx.strokeStyle = "#F08080"
             }else{
-                ctx.strokeStyle = "#8FBC8F"
+                ctx.strokeStyle = "#6784b5"
             }
 
             ctx.setLineDash([0]);
