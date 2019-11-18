@@ -1,45 +1,54 @@
+<title>Bezier Curves by amtg</title>
 
-<body>
-    <canvas id="canvas" width="900" height="500" style="background: white; margin-top: 7%;" >
-    </canvas>
-</body>
-
-<br>
-<br>
-
-<div>
-    <input type="button" id="b_changeMode" value="Change Mode" onclick="changeMode()">
+<div class="columnLeft">
+    <img id="bongbong" src='./assets/1.png' alt="random bong bong">
+    <h3 id="subtitle">☆ Bezier Curves by amtg ☆ </h3>
 </div>
 
-<br>  
+<div class="columnRight">
+    <body>
+        <canvas id="canvas" width="900" height="500" style="background: white;" >
+        </canvas>
+    </body>
 
-<div class="showCheckboxes">
-    <label class="c_show"><input type="checkbox" id="showCurves" onclick="redrawInCanvas()"> Show Curves </label>
-    <label class="c_show"><input type="checkbox" id="showPolyg" onclick="redrawInCanvas()"> Show polygones</label>
-    <label class="c_show"><input type="checkbox" id="showControlPoints" onclick = "redrawInCanvas()"> Show Control Points</label> 
-</div>
+    <br>
+    <br>
 
-<br>
-
-<div id="defaultModeElements">
-    <input type="number" id="avalNumber" min="0" max="00" value = 15>
-    <input type="button" class="b_actionToCurve" id="createNewCurve" value="Create a new curve!" onclick="createNewCurve()">
-</div>
-
-<div id="makeChangesModeElements">
-
-    <div class="alternCurvesButtons">
-            <input type="button" class="b_prevNext" id="prevCurve" value="<" onclick="selectPrevCurve()">
-            <input type="button" class="b_prevNext" id="nextCurve" value=">" onclick ="selectNextCurve()">
+    <div>
+        <input type="button" id="b_changeMode" value="Change Mode" onclick="changeMode()">
     </div>
-    <br>
-    <input type="button" class="b_actionToCurve" id="deleteCurve" value="Delete curve" onclick ="deleteSelectedCurve()">
-    <input type="button" class="b_actionToCurve" id="addPointsToSelectedCurve" value="Add Points" onclick="addPendingPointsToSelectedCurve()">
-    <br>
-    <br>
-    <label class="c_other"><input type="checkbox" id="c_deleteMode" checked> Delete Points Mode </label>
 
+    <br>  
+
+    <div class="showCheckboxes">
+        <label class="c_show"><input type="checkbox" id="showCurves" onclick="redrawInCanvas()"> Show Curves </label>   
+        <label class="c_show"><input type="checkbox" id="showPolyg" onclick="redrawInCanvas()"> Show polygones</label>
+        <label class="c_show"><input type="checkbox" id="showControlPoints" onclick = "redrawInCanvas()"> Show Control Points</label> 
+    </div>
+
+    <br>
+
+    <div id="defaultModeElements">
+        <input type="number" id="avalNumber" min="0" max="00" value = 15>
+        <input type="button" class="b_actionToCurve" id="createNewCurve" value="Create a new curve!" onclick="createNewCurve()">
+    </div>
+
+    <div id="makeChangesModeElements">
+
+        <div class="alternCurvesButtons">
+                <input type="button" class="b_prevNext" id="prevCurve" value="<" onclick="selectPrevCurve()">
+                <input type="button" class="b_prevNext" id="nextCurve" value=">" onclick ="selectNextCurve()">
+        </div>
+        <br>
+        <label class="c_other"><input type="checkbox" id="c_transformMode" checked onclick="changeTransformMode()"> Transform Mode </label>
+        <br>
+        <br>
+        <div id="notTransformModeButtons">
+            <input type="button" class="b_actionToCurve" id="deleteCurve" value="Delete curve" onclick ="deleteSelectedCurve()">
+            <input type="button" class="b_actionToCurve" id="addPointsToSelectedCurve" value="Add Points" onclick="addPendingPointsToSelectedCurve()">
+        </div>
+    </div>
+
+    <script src="./projetin.js"></script>
+    <link rel="stylesheet" type="text/css" href="projetin.css" media="screen"/>
 </div>
-
-<script src="./projetin.js"></script>
-<link rel="stylesheet" type="text/css" href="projetin.css" media="screen"/>

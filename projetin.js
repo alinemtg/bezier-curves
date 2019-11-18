@@ -29,14 +29,15 @@ var b_createNewCurve = document.getElementById('createNewCurve')
 //~·=·='☆ . · 'make changes mode' elements · . ☆'=·=·~ 
 var b_prevCurve = document.getElementById('prevCurve')
 var b_nextCurve = document.getElementById('nextCurve')
-var c_deletePoints = document.getElementById('de')
+var c_transformMode = document.getElementById('c_transformMode')
 var b_deleteSelCurve = document.getElementById('deleteCurve')
 var b_addPointsToSelCurve = document.getElementById('addPointsToSelectedCurve')
 
 // on init we show the 'default mode' elements 
 var isInDefaultMode = false
 changeMode()
-
+var isInTransformMode = false
+changeTransformMode()
 
 // ~·=·=·=·=·=·=·=·=·=·=·=·='☆ . · MAIN CODE · . ☆'=·=·=·=·=·=·=·=·=·=·=·=·~
 
@@ -48,8 +49,10 @@ var create_pointsPending = []
 var change_pointsPending = []
 var ctx = canvas.getContext('2d')
 
-canvas.addEventListener('click', function(){
+var  mouseIsDown = false 
 
+canvas.addEventListener('click', function(){
+    
     var clickedPoint = getClickCoordinates(event, canvas)
 
     if (isInDefaultMode){
@@ -69,12 +72,24 @@ canvas.addEventListener('click', function(){
         if (selectingGameHasStarted & curves.length>0){
         
             // `•.¸¸.•´´¯`••._.• when i click where there's other point, some changes occurs •._.••`¯´´•.¸¸.•`
-            var selectedCurveHasClickedPt = false
+            var selectedCurveHasClickedPt = false // if the curve has the clicked point on its *control points* 
+            var indexPoint = -1 
             for (var i=0; i<curves[selectedCurve].controlPoints.length; i++){
                 var comparedPoint = curves[selectedCurve].controlPoints [i]
                 if (Math.sqrt((clickedPoint.x-comparedPoint.x)*(clickedPoint.x-comparedPoint.x) + (clickedPoint.y-comparedPoint.y)*(clickedPoint.y-comparedPoint.y)) <= sizeOfPoints+error){
                     selectedCurveHasClickedPt = true
-                    curves[selectedCurve].controlPoints.splice(i, 1)
+                    indexPoint = i
+                    break
+                }
+            }
+                // `•.¸¸.• the change here is to transform the curve by translating the clicked point •.¸¸.•`
+            if (c_transformMode.checked){
+    
+
+            }else{
+                // `•.¸¸.• the change here is to delete the clicked point •.¸¸.•`
+                if (selectedCurveHasClickedPt){
+                    curves[selectedCurve].controlPoints.splice(indexPoint, 1)
                     console.log(change_pointsPending)
                     if (curves[selectedCurve].controlPoints.length==0){
                         deleteSelectedCurve()
@@ -83,17 +98,16 @@ canvas.addEventListener('click', function(){
                         curves[selectedCurve].castejuju()
                     }
                     redrawInCanvas()
-                    break
                 }
-            }
 
-            // `•.¸¸.•´´¯`••._.• when i click where there's no other point, a new point is drawn •._.••`¯´´•.¸¸.•`        
-            if (!selectedCurveHasClickedPt){
-                ctx.beginPath()
-                change_pointsPending.push (clickedPoint)
-                ctx.arc (clickedPoint.x, clickedPoint.y, sizeOfPoints, 0,  Math.PI * 2)
-                ctx.fillStyle = "#bd5982"
-                ctx.fill();
+                // `•.¸¸.•´´¯`••._.• when i click where there's no other point, a new point is drawn •._.••`¯´´•.¸¸.•`        
+                if (!selectedCurveHasClickedPt){
+                    ctx.beginPath()
+                    change_pointsPending.push (clickedPoint)
+                    ctx.arc (clickedPoint.x, clickedPoint.y, sizeOfPoints, 0,  Math.PI * 2)
+                    ctx.fillStyle = "#bd5982"
+                    ctx.fill();
+                }
             }
         }else{
             alert("Please select a curve ^^") 
@@ -124,10 +138,20 @@ function changeMode(){
         document.getElementById("defaultModeElements").style.display = "block"
         document.getElementById("makeChangesModeElements").style.display = "none"
     }else{
-        document.getElementById("defaultModeElements").style.display = "none";
-        document.getElementById("makeChangesModeElements").style.display = "block";
+        document.getElementById("defaultModeElements").style.display = "none"
+        document.getElementById("makeChangesModeElements").style.display = "block"
     }
 }
+
+function changeTransformMode(){
+    isInTransformMode = !isInTransformMode
+    if (isInTransformMode){
+        document.getElementById("notTransformModeButtons").style.display = "none"
+    }else{
+        document.getElementById("notTransformModeButtons").style.display = "block"
+    }
+}
+
 
 // ~·=·=·=·=·=·=·='☆ . · 'MAKE CHANGES' MODE · . ☆'=·=·=·=·=·=·=·~
 
@@ -338,3 +362,18 @@ function Curve() {
         }
     }
 }
+
+// (un)necessary : set a random bong bong
+
+function getRandomImage() {
+    var images = ['./assets/1.png', './assets/2.png', './assets/3.png', './assets/4.png'];
+    var image = images[Math.floor(Math.random()*images.length)];
+     
+    return image;
+    }
+     
+function displayRandomImage() {
+    var htmlImage = document.getElementById("bongbong");
+    htmlImage.src = getRandomImage();
+}
+displayRandomImage();

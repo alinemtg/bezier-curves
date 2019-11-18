@@ -1,6 +1,18 @@
 
 /* - - - - - - - GERAL - - - - - - - */
 
+#bongbong{
+    max-width:200px;
+    max-height:150px;
+    width: auto;
+    height: auto;
+    margin-top: 2%;
+}
+#subtitle{
+    font-family: "Lucida Console", Courier, monospace;
+    color: #001b41;
+}
+
 body{
     text-align: center;
     background: rgb(145,168,208);
@@ -63,7 +75,7 @@ body{
     text-decoration: none;
     outline: none;
     color: #fff;
-    background-color: rgb(105, 130, 173);
+    background-color: rgb(247, 176, 175);
     border: none;
     border-radius: 20px;
     box-shadow: 0 5px #999;
@@ -71,7 +83,7 @@ body{
 .b_prevNext:hover {background-color: #F7CAC9}
 
 .b_prevNext:active {
-  background-color: rgb(247, 176, 175);
+  background-color: rgb(230, 129, 127);
   box-shadow: 0 0px #666;
   transform: translateY(2px);
 }
