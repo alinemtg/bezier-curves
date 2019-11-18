@@ -8,7 +8,7 @@ Projetinho de PG, II Unidade .
 
 // - - colors used ^^ - - 
 // pending point in defaultMode = #91A8D0
-// pending point in removeMode = #d99cb5
+// pending point in changingMode = ##bf7191
 // curve point/polygon normal = #91A8D0
 // curve normal = #6784b5
 // curve - all- selected = #F08080
@@ -42,7 +42,7 @@ changeTransformMode()
 // ~·=·=·=·=·=·=·=·=·=·=·=·='☆ . · MAIN CODE · . ☆'=·=·=·=·=·=·=·=·=·=·=·=·~
 
 var sizeOfPoints = 4
-var error = 0.3
+var error = 0.5
 
 var curves = []
 var create_pointsPending = []
@@ -51,8 +51,9 @@ var ctx = canvas.getContext('2d')
 
 var  mouseIsDown = false 
 
-canvas.addEventListener('click', function(){
-    
+canvas.addEventListener('mousedown', clickOnCanvas)
+function clickOnCanvas(){    
+
     var clickedPoint = getClickCoordinates(event, canvas)
 
     if (isInDefaultMode){
@@ -65,30 +66,33 @@ canvas.addEventListener('click', function(){
             ctx.fillStyle = "#91A8D0"
             ctx.fill();
     }
-    else{
 
+    else{
         // ~·=·=·=·=·=·=·='☆ . · 'MAKE CHANGES' MODE · . ☆'=·=·=·=·=·=·=·~
 
         if (selectingGameHasStarted & curves.length>0){
         
+            var indexPoint = clickedPtIndexAtSelectedCurve(curves[selectedCurve], clickedPoint)
+        
             // `•.¸¸.•´´¯`••._.• when i click where there's other point, some changes occurs •._.••`¯´´•.¸¸.•`
-            var selectedCurveHasClickedPt = false // if the curve has the clicked point on its *control points* 
-            var indexPoint = -1 
-            for (var i=0; i<curves[selectedCurve].controlPoints.length; i++){
-                var comparedPoint = curves[selectedCurve].controlPoints [i]
-                if (Math.sqrt((clickedPoint.x-comparedPoint.x)*(clickedPoint.x-comparedPoint.x) + (clickedPoint.y-comparedPoint.y)*(clickedPoint.y-comparedPoint.y)) <= sizeOfPoints+error){
-                    selectedCurveHasClickedPt = true
-                    indexPoint = i
-                    break
-                }
-            }
-                // `•.¸¸.• the change here is to transform the curve by translating the clicked point •.¸¸.•`
+                
+                // `•.¸¸.• the change here is to transform the curve by translating the clicked point if it is a controlPoints •.¸¸.•`
             if (c_transformMode.checked){
-    
-
+                if (indexPoint>-1){
+                    canvas.addEventListener('mouseup', mouseupF = (event) =>{
+                        canvas.removeEventListener('mousemove', mousemoveF)
+                        canvas.removeEventListener('mousedown', mouseupF)
+                    })
+                    canvas.addEventListener('mousemove', mousemoveF = (event) =>{
+                        curves[selectedCurve].controlPoints[indexPoint] = getClickCoordinates(event, canvas)
+                        curves[selectedCurve].castejuju()
+                        redrawInCanvas()
+                    })
+                }
             }else{
+                
                 // `•.¸¸.• the change here is to delete the clicked point •.¸¸.•`
-                if (selectedCurveHasClickedPt){
+                if (indexPoint>-1){
                     curves[selectedCurve].controlPoints.splice(indexPoint, 1)
                     console.log(change_pointsPending)
                     if (curves[selectedCurve].controlPoints.length==0){
@@ -98,14 +102,14 @@ canvas.addEventListener('click', function(){
                         curves[selectedCurve].castejuju()
                     }
                     redrawInCanvas()
-                }
+                
 
-                // `•.¸¸.•´´¯`••._.• when i click where there's no other point, a new point is drawn •._.••`¯´´•.¸¸.•`        
-                if (!selectedCurveHasClickedPt){
+            // `•.¸¸.•´´¯`••._.• but when i click where there's no other point, a new point is drawn •._.••`¯´´•.¸¸.•`        
+                }else{
                     ctx.beginPath()
                     change_pointsPending.push (clickedPoint)
                     ctx.arc (clickedPoint.x, clickedPoint.y, sizeOfPoints, 0,  Math.PI * 2)
-                    ctx.fillStyle = "#bd5982"
+                    ctx.fillStyle = "#bf7191"
                     ctx.fill();
                 }
             }
@@ -114,7 +118,7 @@ canvas.addEventListener('click', function(){
         }
     }        
     
-})
+}
 
 // ~·=·=·=·=·=·=·=·=·=·=·=·='☆ . · RESPONSES TO SOME HTML ELEMENTS · . ☆'=·=·=·=·=·=·=·=·=·=·=·=·~
 
@@ -127,8 +131,6 @@ function createNewCurve(){
     curve.castejuju()
     curves.push(curve)
     create_pointsPending = []
- 
-    c_showCurves.checked = true    
     redrawInCanvas()
 }
 
@@ -225,6 +227,19 @@ function getClickCoordinates (event, canvas) {
         return (new Point(thisX, thisY))
 }
 
+function clickedPtIndexAtSelectedCurve(curve, clickedPoint){
+    var indexPoint = -1 
+    for (var i=0; i<curve.controlPoints.length; i++){
+        var comparedPoint = curve.controlPoints [i]
+        if (Math.sqrt((clickedPoint.x-comparedPoint.x)*(clickedPoint.x-comparedPoint.x) + (clickedPoint.y-comparedPoint.y)*(clickedPoint.y-comparedPoint.y)) <= sizeOfPoints+error){
+        //selectedCurveHasClickedPt = true
+        indexPoint = i
+        break
+        }
+    }
+    return indexPoint
+}
+
 function restartSelectingGame(){
     selectedCurve = -1
     selectingGameHasStarted = false
@@ -261,7 +276,7 @@ function redrawInCanvas(){
             ctx.beginPath()
             ctx.moveTo(change_pointsPending[p].x, change_pointsPending[p].y)
             ctx.arc (change_pointsPending[p].x, change_pointsPending[p].y, sizeOfPoints, 0,  Math.PI * 2)
-            ctx.fillStyle = "#d99cb5"
+            ctx.fillStyle = "#bf7191"
             ctx.fill();
         }
     }
