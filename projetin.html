@@ -9,15 +9,16 @@
 <input type="button" id="createNewCurve" value="Create a new curve!" onclick="createNewCurve()">
 
 <input type="button" id="prevCurve" value="<" onclick="selectPrevCurve()">
-<input type="button" id="nextCurve" value=">" onclick = "selectNextCurve()">
-<input type="button" id="deleteCurve" value="Delete this curve!">
+<input type="button" id="nextCurve" value=">" onclick ="selectNextCurve()">
+<input type="button" id="deleteCurve" value="Delete this curve!" onclick ="deleteSelectedCurve()">
 
 <br>
 <label><input type="checkbox" id="showCurves" onclick="redrawInCanvas()"> Show Curves </label>
 <label><input type="checkbox" id="showPolyg" onclick="redrawInCanvas()"> Show polygones</label>
 <label><input type="checkbox" id="showControlPoints" onclick = "redrawInCanvas()"> Show Control Points</label> 
 
-
-<label><input type="checkbox" id="defaultMode" value="Default Mode"> Default Mode </label>
+<br>
+<label><input type="checkbox" id="defaultMode" value="Default Mode" checked> Default Mode </label>
+<input type="button" id="addPointsToSelectedCurve" value="Add Points to Selected Curve!" onclick="addPendingPointsToSelectedCurve()">
 
 <script src="./projetin.js"></script>

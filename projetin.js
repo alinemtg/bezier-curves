@@ -24,25 +24,61 @@ var c_showCurves = document.getElementById('showCurves')
 var c_showContrPoints = document.getElementById('showControlPoints') 
 
 var defaultMode = document.getElementById('defaultMode')
+var addPointsToSelectedCurve = document.getElementById('addPointsToSelectedCurve')
 
 
 // ~·=·=·=·=·=·=·='☆ . · MAIN CODE · . ☆'=·=·=·=·=·=·=·~
 
+var sizeOfPoints = 4
+var error = 0.3
+
 var curves = []
-var pointsPending = []
+var create_pointsPending = []
+var change_pointsPending = []
 var ctx = canvas.getContext('2d')
 
 canvas.addEventListener('click', function(){
 
     var clickedPoint = getClickCoordinates(event, canvas)
 
-    // `•.¸¸.•´´¯`••._.• when i click, a point is drawn •._.••`¯´´•.¸¸.•`        
-        ctx.beginPath()
-        pointsPending.push (clickedPoint)
-        ctx.arc (clickedPoint.x, clickedPoint.y, 4, 0,  Math.PI * 2)
-        ctx.fillStyle = "#7E8754"
-        ctx.fill();
+    if (defaultMode.checked){
+        // ~·=·=·=·=·=·=·='☆ . · DEFAULT MODE · . ☆'=·=·=·=·=·=·=·~
 
+        // `•.¸¸.•´´¯`••._.• when i click, a point is drawn •._.••`¯´´•.¸¸.•`        
+            ctx.beginPath()
+            create_pointsPending.push (clickedPoint)
+            ctx.arc (clickedPoint.x, clickedPoint.y, sizeOfPoints, 0,  Math.PI * 2)
+            ctx.fillStyle = "#7E8754"
+            ctx.fill();
+    }
+    else{
+        // ~·=·=·=·=·=·=·='☆ . · CHANGING MODE · . ☆'=·=·=·=·=·=·=·~
+
+        if (selectingGameHasStarted & curves.length>0){
+        
+                    // `•.¸¸.•´´¯`••._.• when i click where there's other point, some changes occurs •._.••`¯´´•.¸¸.•`
+            var selectedCurveHasClickedPt = false
+            for (var i=0; i<curves[selectedCurve].controlPoints.length; i++){
+                var comparedPoint = curves[selectedCurve].controlPoints [i]
+                if (Math.sqrt((clickedPoint.x-comparedPoint.x)*(clickedPoint.x-comparedPoint.x) + (clickedPoint.y-comparedPoint.y)*(clickedPoint.y-comparedPoint.y)) <= sizeOfPoints+error){
+                    selectedCurveHasClickedPt = true
+                    curves[selectedCurve].controlPoints.splice(i, 1)
+                    curves[selectedCurve].castejuju()
+                    redrawInCanvas()
+                    break
+                }
+            }
+                    // `•.¸¸.•´´¯`••._.• when i click where there's no other point, a new point is drawn •._.••`¯´´•.¸¸.•`        
+            if (!selectedCurveHasClickedPt){
+                ctx.beginPath()
+                change_pointsPending.push (clickedPoint)
+                ctx.arc (clickedPoint.x, clickedPoint.y, sizeOfPoints, 0,  Math.PI * 2)
+                ctx.fillStyle = "#66CDAA"
+                ctx.fill();
+            }
+        }
+    }        
+    
 })
 
 // ~·=·='☆ . · response to html elements · . ☆'=·=·~
@@ -50,10 +86,10 @@ canvas.addEventListener('click', function(){
 function createNewCurve(){
     var curve = new Curve ()
     curve.avalNumb = avalNumb.value
-    curve.controlPoints = pointsPending
+    curve.controlPoints = create_pointsPending
     curve.castejuju()
     curves.push(curve)
-    pointsPending = []
+    create_pointsPending = []
  
     c_showCurves.checked = true
     console.log(c_showCurves.checked)
@@ -81,30 +117,67 @@ function redrawInCanvas(){
     }
 }
 
-var selectedCurve = -1
-var selectingGameHasStarted = false
+    // `•.¸¸.•´´¯`••._.• selecting gameeee •._.••`¯´´•.¸¸.•`
+
+restartSelectingGame()
 
 function selectPrevCurve(){
-    if(selectingGameHasStarted){
-        curves[Math.abs(selectedCurve)%curves.length].isSelected = false
+    if(curves.length>0){
+        if(selectingGameHasStarted){
+            curves[selectedCurve].isSelected = false
+        }else{
+            selectingGameHasStarted = true
+        }
+        selectedCurve = Math.abs(selectedCurve-1)%curves.length
+        curves[selectedCurve].isSelected = true
+        console.log(curves)
+        redrawInCanvas()
     }else{
-        selectingGameHasStarted = true
+        restartSelectingGame()
     }
-    selectedCurve -= 1
-    curves[Math.abs(selectedCurve)%curves.length].isSelected = true
-    console.log(curves)
-    redrawInCanvas()
 }
+
 function selectNextCurve(){
-    if(selectingGameHasStarted){
-        curves[Math.abs(selectedCurve)%curves.length].isSelected = false
+    if(curves.length>0){
+        if(selectingGameHasStarted){
+            curves[selectedCurve].isSelected = false
+        }else{
+            selectingGameHasStarted = true
+        }
+        selectedCurve = Math.abs(selectedCurve+1)%curves.length
+        curves[selectedCurve].isSelected = true
+        console.log(curves)
+        redrawInCanvas()
     }else{
-        selectingGameHasStarted = true
+        restartSelectingGame()
     }
-    selectedCurve += 1
-    curves[Math.abs(selectedCurve)%curves.length].isSelected = true
+}
+
+function deleteSelectedCurve(){
+    if(selectingGameHasStarted){
+        curves.splice(selectedCurve, 1)
+        restartSelectingGame()
+        redrawInCanvas()
+    }else{
+        alert("Please select a curve ^^")  
+    }
+}
+
+    // `•.¸¸.• making changes in a selected curve •.¸¸.•`
+    
+function addPendingPointsToSelectedCurve(){
     console.log(curves)
-    redrawInCanvas()
+    console.log (selectedCurve)
+    if (selectedCurve>=0){
+        for (var p=0; p<change_pointsPending.length; p++){
+            curves[selectedCurve].controlPoints.push(change_pointsPending[p])
+        }
+        curves[selectedCurve].castejuju()
+        redrawInCanvas()
+    }else{
+        alert("Please select a curve ^^")   
+    }
+    change_pointsPending = []
 }
 
 
@@ -119,6 +192,10 @@ function getClickCoordinates (event, canvas) {
         return (new Point(thisX, thisY))
 }
 
+function restartSelectingGame(){
+    selectedCurve = -1
+    selectingGameHasStarted = false
+}
 
 // ~·=·=·=·=·=·=·='☆ . · some structures · . ☆'=·=·=·=·=·=·=·~
 
@@ -134,6 +211,7 @@ function Curve() {
     this.isSelected = false,
 
     // ~·=·='☆ . · algorithm for bezier curve · . ☆'=·=·~
+    // font: https://pages.mtu.edu/~shene/COURSES/cs3621/NOTES/spline/Bezier/de-casteljau.html
 
     this.castejuju  = function(){
 
@@ -165,7 +243,7 @@ function Curve() {
         for (var p=0; p<this.controlPoints.length; p++){
            ctx.beginPath()
            ctx.moveTo(this.controlPoints.x, this.controlPoints.y)
-           ctx.arc (this.controlPoints[p].x, this.controlPoints[p].y, 4, 0,  Math.PI * 2)
+           ctx.arc (this.controlPoints[p].x, this.controlPoints[p].y, sizeOfPoints, 0,  Math.PI * 2)
 
            if (this.isSelected){
                ctx.fillStyle = "#F08080"
@@ -219,7 +297,7 @@ function Curve() {
         //temporary:
         ctx.beginPath()
            ctx.moveTo(this.controlPoints[0].x, this.controlPoints[0].y)
-           ctx.arc (this.controlPoints[p].x, this.controlPoints[p].y, 4, 0,  Math.PI * 2)
+           ctx.arc (this.controlPoints[p].x, this.controlPoints[p].y, sizeOfPoints, 0,  Math.PI * 2)
            ctx.fillStyle = "#2F4F4F"
            ctx.fill()
         
