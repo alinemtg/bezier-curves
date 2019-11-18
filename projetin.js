@@ -76,6 +76,8 @@ canvas.addEventListener('click', function(){
                 ctx.fillStyle = "#66CDAA"
                 ctx.fill();
             }
+        }else{
+            alert("Please select a curve ^^") 
         }
     }        
     
@@ -83,23 +85,8 @@ canvas.addEventListener('click', function(){
 
 // ~·=·='☆ . · response to html elements · . ☆'=·=·~
 
-function createNewCurve(){
-    var curve = new Curve ()
-    curve.avalNumb = avalNumb.value
-    curve.controlPoints = create_pointsPending
-    curve.castejuju()
-    curves.push(curve)
-    create_pointsPending = []
- 
-    c_showCurves.checked = true
-    console.log(c_showCurves.checked)
-    
-    redrawInCanvas()
-}
-
 function redrawInCanvas(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    console.log(c_showCurves.checked)
     if (c_showCurves.checked){
         for (var c=0; c<curves.length; c++){
             curves[c].showCurve(ctx)
@@ -117,7 +104,19 @@ function redrawInCanvas(){
     }
 }
 
-    // `•.¸¸.•´´¯`••._.• selecting gameeee •._.••`¯´´•.¸¸.•`
+function createNewCurve(){
+    var curve = new Curve ()
+    curve.avalNumb = avalNumb.value
+    curve.controlPoints = create_pointsPending
+    curve.castejuju()
+    curves.push(curve)
+    create_pointsPending = []
+ 
+    c_showCurves.checked = true    
+    redrawInCanvas()
+}
+
+   // `•.¸¸.•´´¯`••._.• selecting gameeee •._.••`¯´´•.¸¸.•`
 
 restartSelectingGame()
 
@@ -130,7 +129,6 @@ function selectPrevCurve(){
         }
         selectedCurve = Math.abs(selectedCurve-1)%curves.length
         curves[selectedCurve].isSelected = true
-        console.log(curves)
         redrawInCanvas()
     }else{
         restartSelectingGame()
@@ -146,7 +144,6 @@ function selectNextCurve(){
         }
         selectedCurve = Math.abs(selectedCurve+1)%curves.length
         curves[selectedCurve].isSelected = true
-        console.log(curves)
         redrawInCanvas()
     }else{
         restartSelectingGame()
@@ -166,8 +163,6 @@ function deleteSelectedCurve(){
     // `•.¸¸.• making changes in a selected curve •.¸¸.•`
     
 function addPendingPointsToSelectedCurve(){
-    console.log(curves)
-    console.log (selectedCurve)
     if (selectedCurve>=0){
         for (var p=0; p<change_pointsPending.length; p++){
             curves[selectedCurve].controlPoints.push(change_pointsPending[p])
@@ -214,8 +209,7 @@ function Curve() {
     // font: https://pages.mtu.edu/~shene/COURSES/cs3621/NOTES/spline/Bezier/de-casteljau.html
 
     this.castejuju  = function(){
-
-        console.log (avalNumb)
+        this.curvePoints = []
         var n = this.controlPoints.length-1
         var Qx = []
         var Qy = []
@@ -284,22 +278,12 @@ function Curve() {
             if (this.isSelected){
                 ctx.strokeStyle = "#F08080"
             }else{
-                ctx.strokeStyle = "#FFAAA4"
+                ctx.strokeStyle = "#8FBC8F"
             }
 
             ctx.setLineDash([0]);
             ctx.lineWidth = 0.7
             ctx.stroke()
         }
-    }
-    ,
-    this.select = function (ctx){
-        //temporary:
-        ctx.beginPath()
-           ctx.moveTo(this.controlPoints[0].x, this.controlPoints[0].y)
-           ctx.arc (this.controlPoints[p].x, this.controlPoints[p].y, sizeOfPoints, 0,  Math.PI * 2)
-           ctx.fillStyle = "#2F4F4F"
-           ctx.fill()
-        
     }
 }
