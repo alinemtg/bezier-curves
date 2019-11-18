@@ -1,9 +1,10 @@
 
-/* Projetinho de PG, II Unidade  .
-   Aline Gouveia - amtg      · 　 ☆ · 　 　　
-                           ✧　 . · 　☆
-                        　   · 　☆ . ·
-                        　　 　　· ✧　.
+/* 
+Projetinho de PG, II Unidade .
+   Aline Gouveia - amtg   · ☆ · 　 　　
+                        ✧　 . ·　☆
+                        　· 　☆ . ·
+                        　　· ✧　.
 */
 
 
@@ -80,6 +81,33 @@ function redrawInCanvas(){
     }
 }
 
+var selectedCurve = -1
+var selectingGameHasStarted = false
+
+function selectPrevCurve(){
+    if(selectingGameHasStarted){
+        curves[Math.abs(selectedCurve)%curves.length].isSelected = false
+    }else{
+        selectingGameHasStarted = true
+    }
+    selectedCurve -= 1
+    curves[Math.abs(selectedCurve)%curves.length].isSelected = true
+    console.log(curves)
+    redrawInCanvas()
+}
+function selectNextCurve(){
+    if(selectingGameHasStarted){
+        curves[Math.abs(selectedCurve)%curves.length].isSelected = false
+    }else{
+        selectingGameHasStarted = true
+    }
+    selectedCurve += 1
+    curves[Math.abs(selectedCurve)%curves.length].isSelected = true
+    console.log(curves)
+    redrawInCanvas()
+}
+
+
 
 // `~·=·=·=·=·=·=·='☆ . · some methods · . ☆'=·=·=·=·=·=·=·~
 
@@ -103,6 +131,7 @@ function Curve() {
     this.avalNumb = 15,
     this.controlPoints = [],
     this.curvePoints = [],
+    this.isSelected = false,
 
     // ~·=·='☆ . · algorithm for bezier curve · . ☆'=·=·~
 
@@ -137,8 +166,13 @@ function Curve() {
            ctx.beginPath()
            ctx.moveTo(this.controlPoints.x, this.controlPoints.y)
            ctx.arc (this.controlPoints[p].x, this.controlPoints[p].y, 4, 0,  Math.PI * 2)
-           ctx.fillStyle = "#7E8754"
-           ctx.fill()
+
+           if (this.isSelected){
+               ctx.fillStyle = "#F08080"
+            } else{
+                ctx.fillStyle = "#7E8754"   
+            }
+            ctx.fill()
         }
     } 
     ,
@@ -149,7 +183,13 @@ function Curve() {
             ctx.moveTo(this.controlPoints[0].x, this.controlPoints[0].y)
             for (var p=0; p<CPlen; p++){
                 ctx.lineTo(this.controlPoints[p].x, this.controlPoints[p].y)
-                ctx.strokeStyle = "#7E8754"
+
+                if (this.isSelected){
+                    ctx.strokeStyle = "#F08080"
+                }else{
+                    ctx.strokeStyle = "#7E8754"
+                }
+
                 ctx.setLineDash([2, 3])
                 ctx.lineWidth = 0.5
                 ctx.stroke()  
@@ -162,10 +202,26 @@ function Curve() {
         ctx.moveTo(this.curvePoints[0].x, this.curvePoints[0].y)
         for (var i=0; i<this.curvePoints.length; i++){
             ctx.lineTo(this.curvePoints[i].x, this.curvePoints[i].y)
-            ctx.strokeStyle = "#FFAAA4"
+            
+            if (this.isSelected){
+                ctx.strokeStyle = "#F08080"
+            }else{
+                ctx.strokeStyle = "#FFAAA4"
+            }
+
             ctx.setLineDash([0]);
             ctx.lineWidth = 0.7
             ctx.stroke()
         }
+    }
+    ,
+    this.select = function (ctx){
+        //temporary:
+        ctx.beginPath()
+           ctx.moveTo(this.controlPoints[0].x, this.controlPoints[0].y)
+           ctx.arc (this.controlPoints[p].x, this.controlPoints[p].y, 4, 0,  Math.PI * 2)
+           ctx.fillStyle = "#2F4F4F"
+           ctx.fill()
+        
     }
 }
