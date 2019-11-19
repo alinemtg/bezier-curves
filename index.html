@@ -7,7 +7,7 @@
 
 <div class="columnRight">
     <body>
-        <canvas id="canvas" width="900" height="500">
+        <canvas id="canvas" width="1200" height="500">
         </canvas>
     </body>
 
@@ -22,7 +22,7 @@
 
     <div class="showCheckboxes">
         <label class="c_show"><input type="checkbox" id="showCurves" onclick="redrawInCanvas()" checked> Show Curves </label>   
-        <label class="c_show"><input type="checkbox" id="showPolyg" onclick="redrawInCanvas()" checked> Show polygones</label>
+        <label class="c_show"><input type="checkbox" id="showPolyg" onclick="redrawInCanvas()" checked> Show polygonal</label>
         <label class="c_show"><input type="checkbox" id="showControlPoints" onclick = "redrawInCanvas()" checked> Show Control Points</label> 
     </div>
 
@@ -46,7 +46,6 @@
         <br>
         <div id="notTransformModeButtons">
             <input type="button" class="b_actionToCurve" id="deleteCurve" value="Delete curve" onclick ="deleteSelectedCurve()">
-            <input type="button" class="b_actionToCurve" id="addPointsToSelectedCurve" value="Add Points" onclick="addPendingPointsToSelectedCurve()">
             <br>
             <br>
             <input type="number" class="avalNumber" id ="toChangeAvalNumber">

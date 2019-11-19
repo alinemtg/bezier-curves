@@ -7,8 +7,7 @@ Projetinho de PG, II Unidade .
 */
 
 // - - colors used ^^ - - 
-// pending point in defaultMode = #91A8D0
-// pending point in changingMode = ##bf7191
+// pending point in changingMode = #bf7191
 // curve point/polygon normal = #91A8D0
 // curve normal = #6784b5
 // curve - all- selected = #F08080
@@ -24,34 +23,29 @@ var c_showContrPoints = document.getElementById('showControlPoints')
 
 //~·=·='☆ . · 'default mode' elements · . ☆'=·=·~ 
 var avalNumb = document.getElementById('avalNumber')
-var b_createNewCurve = document.getElementById('createNewCurve')
 
 //~·=·='☆ . · 'make changes mode' elements · . ☆'=·=·~ 
-var b_prevCurve = document.getElementById('prevCurve')
-var b_nextCurve = document.getElementById('nextCurve')
 var c_transformMode = document.getElementById('c_transformMode')
-var b_deleteSelCurve = document.getElementById('deleteCurve')
-var b_addPointsToSelCurve = document.getElementById('addPointsToSelectedCurve')
 var toChangeAvalNumber = document.getElementById('toChangeAvalNumber')
-var b_actionToCurve = document.getElementById('b_actionToCurve')
+
+
+
+// ~·=·=·=·=·=·=·=·=·=·=·=·='☆ . · MAIN CODE · . ☆'=·=·=·=·=·=·=·=·=·=·=·=·~
+
+var sizeOfPoints = 5
+var error = 1
+
+var curves = []
+var change_pointsPending = []
+var ctx = canvas.getContext('2d')
+
+var  mouseIsDown = false 
 
 // on init we show the 'default mode' elements 
 var isInDefaultMode = false
 changeMode()
 var isInTransformMode = false
 changeTransformMode()
-
-// ~·=·=·=·=·=·=·=·=·=·=·=·='☆ . · MAIN CODE · . ☆'=·=·=·=·=·=·=·=·=·=·=·=·~
-
-var sizeOfPoints = 4
-var error = 0.5
-
-var curves = []
-var create_pointsPending = []
-var change_pointsPending = []
-var ctx = canvas.getContext('2d')
-
-var  mouseIsDown = false 
 
 canvas.addEventListener('mousedown', clickOnCanvas)
 function clickOnCanvas(){    
@@ -61,12 +55,15 @@ function clickOnCanvas(){
     if (isInDefaultMode){
         // ~·=·=·=·=·=·=·='☆ . · 'DEFAULT' MODE · . ☆'=·=·=·=·=·=·=·~
 
-        // `•.¸¸.•´´¯`••._.• when i click, a point is drawn •._.••`¯´´•.¸¸.•`        
-            ctx.beginPath()
-            create_pointsPending.push (clickedPoint)
-            ctx.arc (clickedPoint.x, clickedPoint.y, sizeOfPoints, 0,  Math.PI * 2)
-            ctx.fillStyle = "#91A8D0"
-            ctx.fill();
+        if(curves.length >0){
+
+        // `•.¸¸.•´´¯`••._.• when i click, the curve created is atualized •._.••`¯´´•.¸¸.•`       
+            curves[curves.length-1].controlPoints.push(clickedPoint)
+            curves[curves.length-1].castejuju()
+            redrawInCanvas()
+        }else{
+            alert("Try to create a curve first! ^^")
+        }    
     }
 
     else{
@@ -107,11 +104,9 @@ function clickOnCanvas(){
 
             // `•.¸¸.•´´¯`••._.• but when i click where there's no other point, a new point is drawn •._.••`¯´´•.¸¸.•`        
                 }else{
-                    ctx.beginPath()
-                    change_pointsPending.push (clickedPoint)
-                    ctx.arc (clickedPoint.x, clickedPoint.y, sizeOfPoints, 0,  Math.PI * 2)
-                    ctx.fillStyle = "#bf7191"
-                    ctx.fill();
+                    curves[selectedCurve].controlPoints.push(clickedPoint)
+                    curves[selectedCurve].castejuju()
+                    redrawInCanvas()
                 }
             }
         }else{
@@ -126,17 +121,11 @@ function clickOnCanvas(){
 // ~·=·=·=·=·=·=·='☆ . · 'DEFAULT' MODE · . ☆'=·=·=·=·=·=·=·~
 
 function createNewCurve(){
-    if (create_pointsPending.length>0){
         var curve = new Curve ()
         curve.avalNumb = avalNumb.value
-        curve.controlPoints = create_pointsPending
-        curve.castejuju()
-        curves.push(curve)
-        create_pointsPending = []
+        curve.controlPoints = []
         redrawInCanvas()
-    } else{
-        alert("Try to put some points on the screen first! ^^")
-    }
+        curves.push(curve)
 }
 
 function changeMode(){
@@ -148,6 +137,10 @@ function changeMode(){
         document.getElementById("defaultModeElements").style.display = "none"
         document.getElementById("makeChangesModeElements").style.display = "block"
     }
+    if(curves.length>0){
+        if (curves[curves.length-1].controlPoints.length==0){
+        alert("The latest curve created still has zero points TT")
+    }}
 }
 
 function changeAvaliationNumber(){
@@ -223,24 +216,6 @@ function deleteSelectedCurve(){
         alert("Please select a curve first ^^")  
     }
 }
-    
-function addPendingPointsToSelectedCurve(){
-    
-    if(change_pointsPending.length>0){
-    if (selectedCurve>=0){
-        for (var p=0; p<change_pointsPending.length; p++){
-            curves[selectedCurve].controlPoints.push(change_pointsPending[p])
-        }
-        curves[selectedCurve].castejuju()
-        change_pointsPending = []
-        redrawInCanvas()
-    }else{
-        alert("Please select a curve to add these lonely points ^^")   
-    }
-    }else{
-        alert("Try to put some points on the screen first! ^^")
-    }
-}
 
 
 // ~·=·=·=·=·=·=·=·=·=·=·=·='☆ . · SOME METHODS · . ☆'=·=·=·=·=·=·=·=·=·=·=·=·~
@@ -286,15 +261,6 @@ function redrawInCanvas(){
     if (c_showContrPoints.checked){
         for (var c=0; c<curves.length; c++){
             curves[c].showContrPoints(ctx)
-        }
-    }
-    if (create_pointsPending.length>0){
-        for (var p=0; p<create_pointsPending.length; p++){
-            ctx.beginPath()
-            ctx.moveTo(create_pointsPending[p].x, create_pointsPending[p].y)
-            ctx.arc (create_pointsPending[p].x, create_pointsPending[p].y, sizeOfPoints, 0,  Math.PI * 2)
-            ctx.fillStyle = "#91A8D0"
-            ctx.fill();
         }
     }
     if (change_pointsPending.length>0){
@@ -397,7 +363,7 @@ function Curve() {
                 ctx.strokeStyle = "#6784b5"
             }
 
-            ctx.setLineDash([0]);
+            ctx.setLineDash([])
             ctx.lineWidth = 0.7
             ctx.stroke()
         }

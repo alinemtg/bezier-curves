@@ -16,7 +16,7 @@
 body{
     text-align: center;
     background: rgb(145,168,208);
-    background: radial-gradient(circle, rgba(145,168,208,1) 9%, rgba(206,188,204,1) 50%, rgba(247,202,201,1) 73%);
+    background: linear-gradient(90deg, rgba(145,168,208,1) 30%, rgba(247,202,201,1) 70%);
 }
 
 #canvas{
