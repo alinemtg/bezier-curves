@@ -32,7 +32,7 @@ var toChangeAvalNumber = document.getElementById('toChangeAvalNumber')
 
 // ~·=·=·=·=·=·=·=·=·=·=·=·='☆ . · MAIN CODE · . ☆'=·=·=·=·=·=·=·=·=·=·=·=·~
 
-var sizeOfPoints = 5
+var sizeOfPoints = 7
 var error = 1
 
 var curves = []
@@ -75,7 +75,7 @@ function clickOnCanvas(){
         
             // `•.¸¸.•´´¯`••._.• when i click where there's other point, some changes occurs •._.••`¯´´•.¸¸.•`
                 
-                // `•.¸¸.• the change here is to transform the curve by translating the clicked point if it is a controlPoints •.¸¸.•`
+                // `•.¸¸.• the change here is to transform the curve by translating the clicked point if it is a controlPoint •.¸¸.•`
             if (c_transformMode.checked){
                 if (indexPoint>-1){
                     canvas.addEventListener('mouseup', mouseupF = (event) =>{
@@ -102,7 +102,7 @@ function clickOnCanvas(){
                     redrawInCanvas()
                 
 
-            // `•.¸¸.•´´¯`••._.• but when i click where there's no other point, a new point is drawn •._.••`¯´´•.¸¸.•`        
+            // `•.¸¸.•´´¯`••._.• but when i click where there's no other point, the curve is updated •._.••`¯´´•.¸¸.•`        
                 }else{
                     curves[selectedCurve].controlPoints.push(clickedPoint)
                     curves[selectedCurve].castejuju()
@@ -143,7 +143,7 @@ function changeMode(){
     }}
 }
 
-function changeAvaliationNumber(){
+function changeEvaluationNumber(){
     if (selectingGameHasStarted & curves.length>0){
         curves[selectedCurve].avalNumb = toChangeAvalNumber.value
         curves[selectedCurve].castejuju()
@@ -233,7 +233,6 @@ function clickedPtIndexAtSelectedCurve(curve, clickedPoint){
     for (var i=0; i<curve.controlPoints.length; i++){
         var comparedPoint = curve.controlPoints [i]
         if (Math.sqrt((clickedPoint.x-comparedPoint.x)*(clickedPoint.x-comparedPoint.x) + (clickedPoint.y-comparedPoint.y)*(clickedPoint.y-comparedPoint.y)) <= sizeOfPoints+error){
-        //selectedCurveHasClickedPt = true
         indexPoint = i
         break
         }
@@ -282,7 +281,7 @@ function Point(x, y) {
 }
 
 function Curve() {
-    this.avalNumb = 15,
+    this.avalNumb = 0,
     this.controlPoints = [],
     this.curvePoints = [],
     this.isSelected = false,
@@ -296,11 +295,11 @@ function Curve() {
         var Qx = []
         var Qy = []
 
-        for (var u=0; u<=1; u+=1/this.avalNumb){
-            for (var i=0; i<=n; i++){
-                Qx[i] = this.controlPoints[i].x
-                Qy[i] = this.controlPoints[i].y
-            }
+        for (var i=0; i<=n; i++){
+            Qx[i] = this.controlPoints[i].x
+            Qy[i] = this.controlPoints[i].y
+        }  
+        for (var u=0; u<=1; u+=1/this.avalNumb){  
             for (var k=1; k<=n; k++){
                 for (var i=0; i<=n-k; i++){
                     Qx[i] = (1-u)*Qx[i] + u*Qx[i+1]
@@ -344,8 +343,8 @@ function Curve() {
                     ctx.strokeStyle = "#91A8D0"
                 }
 
-                ctx.setLineDash([2, 3])
-                ctx.lineWidth = 0.5
+                ctx.setLineDash([2, 5])
+                ctx.lineWidth = 1.0
                 ctx.stroke()  
             }
         }
@@ -362,9 +361,8 @@ function Curve() {
             }else{
                 ctx.strokeStyle = "#6784b5"
             }
-
             ctx.setLineDash([])
-            ctx.lineWidth = 0.7
+            ctx.lineWidth = 1.8
             ctx.stroke()
         }
     }
