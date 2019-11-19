@@ -60,10 +60,10 @@ body{
 
 /* number input */
 
-#avalNumber{
+.avalNumber{
     border-radius: 15px;
     text-align: center;
-    padding: 8px 15;
+    padding: 8px 1;
 }
 
 

@@ -32,6 +32,8 @@ var b_nextCurve = document.getElementById('nextCurve')
 var c_transformMode = document.getElementById('c_transformMode')
 var b_deleteSelCurve = document.getElementById('deleteCurve')
 var b_addPointsToSelCurve = document.getElementById('addPointsToSelectedCurve')
+var toChangeAvalNumber = document.getElementById('toChangeAvalNumber')
+var b_actionToCurve = document.getElementById('b_actionToCurve')
 
 // on init we show the 'default mode' elements 
 var isInDefaultMode = false
@@ -97,7 +99,7 @@ function clickOnCanvas(){
                     console.log(change_pointsPending)
                     if (curves[selectedCurve].controlPoints.length==0){
                         deleteSelectedCurve()
-                        alert("oops, you killed a curve!")
+                        alert("oops! you killed a curve (╥_╥) ")
                     }else{
                         curves[selectedCurve].castejuju()
                     }
@@ -114,7 +116,7 @@ function clickOnCanvas(){
                 }
             }
         }else{
-            alert("Please select a curve ^^") 
+            alert("Please select a curve first ^^") 
         }
     }        
     
@@ -125,13 +127,17 @@ function clickOnCanvas(){
 // ~·=·=·=·=·=·=·='☆ . · 'DEFAULT' MODE · . ☆'=·=·=·=·=·=·=·~
 
 function createNewCurve(){
-    var curve = new Curve ()
-    curve.avalNumb = avalNumb.value
-    curve.controlPoints = create_pointsPending
-    curve.castejuju()
-    curves.push(curve)
-    create_pointsPending = []
-    redrawInCanvas()
+    if (create_pointsPending.length>0){
+        var curve = new Curve ()
+        curve.avalNumb = avalNumb.value
+        curve.controlPoints = create_pointsPending
+        curve.castejuju()
+        curves.push(curve)
+        create_pointsPending = []
+        redrawInCanvas()
+    } else{
+        alert("Try to put some points on the screen first! ^^")
+    }
 }
 
 function changeMode(){
@@ -142,6 +148,16 @@ function changeMode(){
     }else{
         document.getElementById("defaultModeElements").style.display = "none"
         document.getElementById("makeChangesModeElements").style.display = "block"
+    }
+}
+
+function changeAvaliationNumber(){
+    if (selectingGameHasStarted & curves.length>0){
+        curves[selectedCurve].avalNumb = toChangeAvalNumber.value
+        curves[selectedCurve].castejuju()
+        redrawInCanvas()
+    }else{
+        alert("Please select a curve first ^^")  
     }
 }
 
@@ -199,21 +215,26 @@ function deleteSelectedCurve(){
         restartSelectingGame()
         redrawInCanvas()
     }else{
-        alert("Please select a curve ^^")  
+        alert("Please select a curve first ^^")  
     }
 }
     
 function addPendingPointsToSelectedCurve(){
+    
+    if(change_pointsPending.length>0){
     if (selectedCurve>=0){
         for (var p=0; p<change_pointsPending.length; p++){
             curves[selectedCurve].controlPoints.push(change_pointsPending[p])
         }
         curves[selectedCurve].castejuju()
+        change_pointsPending = []
         redrawInCanvas()
     }else{
-        alert("Please select a curve ^^")   
+        alert("Please select a curve to add these lonely points ^^")   
     }
-    change_pointsPending = []
+    }else{
+        alert("Try to put some points on the screen first! ^^")
+    }
 }
 
 
