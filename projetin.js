@@ -96,7 +96,6 @@ function clickOnCanvas(){
                 // `•.¸¸.• the change here is to delete the clicked point •.¸¸.•`
                 if (indexPoint>-1){
                     curves[selectedCurve].controlPoints.splice(indexPoint, 1)
-                    console.log(change_pointsPending)
                     if (curves[selectedCurve].controlPoints.length==0){
                         deleteSelectedCurve()
                         alert("oops! you killed a curve (╥_╥) ")
@@ -184,9 +183,13 @@ function selectPrevCurve(){
         }else{
             selectingGameHasStarted = true
         }
-        selectedCurve = Math.abs(selectedCurve-1)%curves.length
+        selectedCurve = selectedCurve-1
+        if (selectedCurve<0){
+            selectedCurve = curves.length-1
+        }
         curves[selectedCurve].isSelected = true
         redrawInCanvas()
+        console.log(selectedCurve)
     }else{
         restartSelectingGame()
     }
@@ -205,6 +208,8 @@ function selectNextCurve(){
     }else{
         restartSelectingGame()
     }
+    console.log(selectedCurve)
+
 }
 
 // ~·=·='☆ . · 'transform' methods · . ☆'=·=·~
