@@ -1,34 +1,40 @@
+body {
+    text-align: center;
+    background: rgb(145,168,208);
+    background: linear-gradient(90deg, rgba(145,168,208,1) 30%, rgba(247,202,201,1) 70%);
+    font-family: "Lucida Console", Courier, monospace;
+}
 
-/* - - - - - - - GERAL - - - - - - - */
-
-#bongbong{
-    max-width:200px;
-    max-height:150px;
+.header-img {
+    max-height:100px;
     width: auto;
     height: auto;
     margin-top: 2%;
 }
-#subtitle{
-    font-family: "Lucida Console", Courier, monospace;
+
+.header-subtitle {
+    
     color: #dbe5f3;
 }
 
-body{
-    text-align: center;
-    background: rgb(145,168,208);
-    background: linear-gradient(90deg, rgba(145,168,208,1) 30%, rgba(247,202,201,1) 70%);
-}
-
-#canvas{
+canvas {
+    display: block;
     background: white; 
+    margin: auto;
     border:3px outset rgb(140, 160, 224);
 }
 
-/* 'change mode' button */
+.fixed-checkboxes {
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+}
 
 #b_changeMode {
-    display: inline-block;
-    padding: 8px 100;
+    display: block;
+    margin: 10px auto 15px;
+    width: 200px;
+    padding: 5px 8px;
     font-size: 15px;
     font-family: "Lucida Console", Courier, monospace;
     cursor: pointer;
@@ -39,8 +45,9 @@ body{
     background-color: rgb(105, 130, 173);
     border: none;
     border-radius: 15px;
-    box-shadow: 0 5px #999;
+    box-shadow: 0 3px #999;
 }
+
 #b_changeMode:hover {background-color: #F7CAC9}
 
 #b_changeMode:active {
@@ -50,29 +57,21 @@ body{
 }
 
 
-/* 'show' checkboxes*/
-
-.c_show{
-    font-family: "Lucida Console", Courier, monospace;
+.defaultMode {
+  display: flex; 
+  justify-content: center; 
 }
 
-/* - - - - - - - 'DEFAULT' MODE - - - - - - - */
+.makeChangesMode {
+    display: flex;
 
-/* number input */
-
-.avalNumber{
-    border-radius: 15px;
-    text-align: center;
-    padding: 8px 1;
 }
 
+#c_pointsKillerMode {
+    margin: 0 auto;
+}
 
-/* - - - - - - - 'MAKE CHANGES' MODE - - - - - - - */
-
-/* 'prev/next' buttons */
-
-.b_prevNext{
-    display: inline-block;
+.b_prevNext {
     padding: 8px 15;
     font-size: 15px;
     cursor: pointer;
@@ -84,8 +83,12 @@ body{
     border: none;
     border-radius: 20px;
     box-shadow: 0 5px #999;
+    padding: 8px 15px;
+    margin: 10px 0;
 }
-.b_prevNext:hover {background-color: #F7CAC9}
+.b_prevNext:hover {
+    background-color: #F7CAC9
+}
 
 .b_prevNext:active {
   background-color: rgb(230, 129, 127);
@@ -93,17 +96,7 @@ body{
   transform: translateY(2px);
 }
 
-/* 'delete mode' checkbox*/
-
-.c_other{
-    font-family: "Lucida Console", Courier, monospace;
-}
-
-/* - - - - - - - BOTH MODES - - - - - - - */
-
-/* 'create/delete/insertPoints' buttons */
-
-.b_actionToCurve{
+.b_actionToCurve {
     display: inline-block;
     padding: 8px 10;
     font-size: 15px;
@@ -116,6 +109,8 @@ body{
     background-color: rgb(247, 176, 175);
     border: none;
     border-radius: 15px;
+    padding: 5px 8px;
+    margin: 5px 1px;
 }
 .b_actionToCurve:hover {background-color: #F7CAC9}
 
@@ -123,3 +118,11 @@ body{
   background-color: rgb(230, 129, 127);
   transform: translateY(2px);
 }
+
+.avalNumber {
+    border-radius: 15px;
+    text-align: center;
+    padding: 5px 3px;
+    max-width: 50px;
+}
+

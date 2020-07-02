@@ -1,58 +1,53 @@
-<title>Bezier Curves by amtg</title>
+<!DOCTYPE html>
+<head>
+    <title>Bezier Curves by amtg</title>
+    <link rel="stylesheet" type="text/css" href="style.css" media="screen"/>
+</head>
+<body>
+    <header>
+        <img class="header-img" src='./assets/1.png' alt="random bong bong">
+        <h3 class="header-subtitle">☆ Bezier Curves by amtg ☆</h3>
+    </header>
 
-<div class="columnLeft">
-    <img id="bongbong" src='./assets/1.png' alt="random bong bong">
-    <h3 id="subtitle">☆ Bezier Curves by amtg ☆ </h3>
-</div>
+    <canvas width="1200" height="500"></canvas>
 
-<div class="columnRight">
-    <body>
-        <canvas id="canvas" width="1200" height="500">
-        </canvas>
-    </body>
-
-    <br>
-    <br>
-
-    <div>
-        <input type="button" id="b_changeMode" value="Change Mode" onclick="changeMode()">
+    <div class="fixed-checkboxes">
+        <label class="c_show"><input type="checkbox" id="c_showCurves" checked>Show Curves</label>   
+        <label class="c_show"><input type="checkbox" id="c_showPolyg" checked>Show polygonal</label>
+        <label class="c_show"><input type="checkbox" id="c_showControlPoints" checked>Show Control Points</label> 
     </div>
+    
+    <input type="button" id="b_changeMode" value="Change Mode"> 
 
-    <br>  
-
-    <div class="showCheckboxes">
-        <label class="c_show"><input type="checkbox" id="showCurves" onclick="redrawInCanvas()" checked> Show Curves </label>   
-        <label class="c_show"><input type="checkbox" id="showPolyg" onclick="redrawInCanvas()" checked> Show polygonal</label>
-        <label class="c_show"><input type="checkbox" id="showControlPoints" onclick = "redrawInCanvas()" checked> Show Control Points</label> 
-    </div>
-
-    <br>
-
-    <div id="defaultModeElements">
-        <input type="number" class="avalNumber" id="avalNumber" value = 50>
-        <input type="button" class="b_actionToCurve" id="createNewCurve" value="Create a new curve!" onclick="createNewCurve()">
-    </div>
-
-    <div id="makeChangesModeElements">
-
-        <div class="alternCurvesButtons">
-                <input type="button" class="b_prevNext" id="prevCurve" value="<" onclick="selectPrevCurve()">
-                <input type="button" class="b_prevNext" id="nextCurve" value=">" onclick ="selectNextCurve()">
+    <section class="action-elements">
+        <div class="defaultMode">
+            <input type="number" class="avalNumber" id="avalNumber" value="50">
+            <input type="button" class="b_actionToCurve" id="b_createNewCurve" value="Create a new curve!">
         </div>
 
-        <br>
-        <label class="c_other"><input type="checkbox" id="c_transformMode" checked onclick="changeTransformMode()"> Transform Mode </label>
-        <br>
-        <br>
-        <div id="notTransformModeButtons">
-            <input type="button" class="b_actionToCurve" id="deleteCurve" value="Delete curve" onclick ="deleteSelectedCurve()">
-            <br>
-            <br>
-            <input type="number" class="avalNumber" id ="toChangeAvalNumber">
-            <input type="button" class="b_actionToCurve" id="b_changeAvalNumber" value="Change avaliation" onclick="changeEvaluationNumber()">
-        </div>
-    </div>
+        <div class="makeChangesMode" style="display: none">
+            <label><input type="checkbox" id="c_pointsKillerMode" checked>'Points Killer'</label>
 
-    <script src="./projetin.js"></script>
-    <link rel="stylesheet" type="text/css" href="projetin.css" media="screen"/>
-</div>
+            <div class="alternCurvesButtons">
+                    <input type="button" class="b_prevNext" id="b_prevCurve" value="<">
+                    <input type="button" class="b_prevNext" id="b_nextCurve" value=">">
+            </div>
+
+            <div class="modifyEvaluationNumber">
+                <input type="number" class="avalNumber" id ="toChangeAvalNumber">
+                <input type="button" class="b_actionToCurve" id="b_changeAvalNumber" value="Change avaliation" onclick="changeEvaluationNumber()">
+            </div>
+            <input type="button" class="b_actionToCurve" id="b_deleteCurve" value="Delete curve">
+        </div>
+    </section>
+
+    
+    <script src="./setHeaderImg.js"></script>   
+    <script src="./structures.js"></script>
+    <script src="./main.js"></script>
+    <script src="./defaultMode.js"></script>
+    <script src="./makeChangesMode.js"></script>
+</body>
+
+
+
